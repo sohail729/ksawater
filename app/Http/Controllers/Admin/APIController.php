@@ -249,7 +249,6 @@ class APIController extends Controller
                 $data['items'][$key]['total'] = $detail->total;
             }
         }
-
         return $data;
     }
 
