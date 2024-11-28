@@ -1,0 +1,91 @@
+{
+    "1": {
+      "upto5": 60,
+      "upto11": 100,
+      "upto20": 150,
+      "upto30": 200,
+      "featured_duration": 0,
+      "featured": {}
+    },
+    "3": {
+      "upto5": 54,
+      "upto11": 90,
+      "upto20": 135,
+      "upto30": 180,
+      "featured_duration": 7,
+      "featured": {
+        "1": {
+          "upto5": 10,
+          "upto11": 7.50,
+          "upto20": 6,
+          "upto30":5
+        },
+        "7": {
+          "upto5": 50,
+          "upto11": 45,
+          "upto20": 40,
+          "upto30": 30
+        },
+        "30": {
+          "upto5": 150,
+          "upto11": 135,
+          "upto20": 120,
+          "upto30": 100
+        }
+      }
+    },
+    "6": {
+      "upto5": 51,
+      "upto11": 85,
+      "upto20": 127.5,
+      "upto30": 170,
+      "featured_duration": 14,
+      "featured": {
+        "1": {
+          "upto5": 10,
+          "upto11": 7.50,
+          "upto20": 6,
+          "upto30":5
+        },
+        "7": {
+          "upto5": 50,
+          "upto11": 45,
+          "upto20": 40,
+          "upto30": 30
+        },
+        "30": {
+          "upto5": 150,
+          "upto11": 135,
+          "upto20": 120,
+          "upto30": 100
+        }
+      }
+    },
+    "12": {
+      "upto5": 48,
+      "upto11": 80,
+      "upto20": 120,
+      "upto30": 160,
+      "featured_duration": 30,
+      "featured": {
+        "1": {
+          "upto5": 10,
+          "upto11": 7.50,
+          "upto20": 6,
+          "upto30":5
+        },
+        "7": {
+          "upto5": 50,
+          "upto11": 45,
+          "upto20": 40,
+          "upto30": 30
+        },
+        "30": {
+          "upto5": 150,
+          "upto11": 135,
+          "upto20": 120,
+          "upto30": 100
+        }
+      }
+    }
+  }

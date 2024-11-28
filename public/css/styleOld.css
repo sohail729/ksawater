@@ -1,0 +1,21 @@
+html,
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.btn{
+    border-radius: 12px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #dc3545;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
