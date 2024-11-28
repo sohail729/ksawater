@@ -252,6 +252,7 @@ class APIController extends Controller
         return $data;
     }
 
+
     public function createCustomer(Request $request){
         $rules = [
             'fullname' => 'required',
