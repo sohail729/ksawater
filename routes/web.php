@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DealerController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\SettingsController;
@@ -149,6 +150,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::put('/products/{product}/update', [ProductController::class, 'update'])->name('product.update');
     Route::delete('products/{product}/delete', [ProductController::class, 'destroy'])->name('product.destroy');
+
+
+    //Drivers Routes
+    Route::get('drivers/create', [DriverController::class, 'create'])->name('drivers.create');
+    Route::get('drivers/list', [DriverController::class, 'index'])->name('drivers.index');
+    Route::post('drivers/store', [DriverController::class, 'store'])->name('drivers.store');
+    Route::get('drivers/{driver}/edit', [DriverController::class, 'edit'])->name('drivers.edit');
+    Route::put('/drivers/{driver}/update', [DriverController::class, 'update'])->name('drivers.update');
+    Route::delete('drivers/{driver}/delete', [DriverController::class, 'destroy'])->name('drivers.destroy');
 
 
 

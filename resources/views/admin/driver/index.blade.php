@@ -8,11 +8,11 @@
                 <div class="nk-block-head nk-block-head-sm">
                     <div class="nk-block-between">
                         <div class="nk-block-head-content">
-                            <h2 class="nk-block-title fw-normal">Products</h2>
+                            <h2 class="nk-block-title fw-normal">Drivers</h2>
                             <nav>
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ env('APP_NAME') }}</a></li>
-                                    <li class="breadcrumb-item active"><a href="{{ route('admin.product.index') }}">Products</a></li>
+                                    <li class="breadcrumb-item active"><a href="{{ route('admin.drivers.index') }}">Drivers</a></li>
                                 </ul>
                             </nav>
                         </div><!-- .nk-block-head-content -->
@@ -32,44 +32,40 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Image</th>
-                                            <th>Category</th>
                                             <th>Name</th>
-                                            <th>Price</th>
-                                            <th>Volume</th>
-                                            <th>Bundle</th>
-                                            <th>Description</th>
+                                            <th>Phone</th>
+                                            <th>Availability</th>
                                             <th>Status</th>
+                                            <th>National Id</th>
+                                            <th>Vehicle Number</th>
+                                            <th>License Number</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach( $products as $product )
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td><img src="{{ asset('storage/uploads/products/'. $product->image) }}" width="50px" alt=""></td>
-                                            <td>{{ $product->category->name }}</td>
-                                            <td>{{ $product->title }}</td>
-                                            <td>{{ $product->price }}</td>
-                                            <td>{{ $product->volume }} {{ $product->unit }}</td>
-                                            <td>{{ $product->bundle }}</td>
-                                            <td>{{ $product->description }}</td>
+                                        @foreach( $drivers as $driver )
+                                        <tr id="rowID-{{ $driver->id }}">
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$driver->fullname }}</td>
+                                            <td>{{$driver->phone }}</td>
+                                            <td>{{$driver->availability }}</td>
                                             <td>
-                                                @if ($product->status)
-                                                <span class="badge badge-sm bg-outline-success">Active</span>
+                                                @if ($driver->status == 1)
+                                                <span class="badge bg-success">Active</span>
                                                 @else
-                                                <span class="badge badge-sm bg-outline-danger">Inactive</span>
+                                                <span class="badge bg-warning">Inactive</span>
                                                 @endif
                                             </td>
+                                            <td>{{$driver->national_id }}</td>
+                                            <td>{{$driver->vehicle_number }}</td>
+                                            <td>{{$driver->license_number }}</td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a class="btn btn-info btn-sm"
-                                                    href='{{ route("admin.product.edit", $product->id) }}'><em
+                                                    href='{{ route("admin.drivers.edit", $driver->id) }}'><em
                                                         class="icon ni ni-edit"></em></a>
-                                                    <a class="btn btn-danger btn-sm delete" href='javascript:void(0)' data-id='{{ $product->id }}' data-route='{{ route("admin.product.destroy", $product->id) }}'><em class="icon ni ni-trash"></em></a>
                                                 </div>
                                             </td>
-
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -84,3 +80,8 @@
 </div>
 
 @endsection
+@push('scripts')
+    <script>
+
+    </script>
+@endpush

@@ -86,6 +86,22 @@
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
                                         <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
+                                        <span class="nk-menu-text">Drivers</span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li class="nk-menu-item">
+                                            <a href="{{ route('admin.drivers.create') }}" class="nk-menu-link"><span
+                                                    class="nk-menu-text">Create</span></a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a href="{{ route('admin.drivers.index') }}" class="nk-menu-link"><span
+                                                    class="nk-menu-text">View</span></a>
+                                        </li>
+                                    </ul><!-- .nk-menu-sub -->
+                                </li><!-- .nk-menu-item -->
+                                <li class="nk-menu-item has-sub">
+                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
                                         <span class="nk-menu-text">Banners</span>
                                     </a>
                                     <ul class="nk-menu-sub">

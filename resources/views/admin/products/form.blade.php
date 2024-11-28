@@ -8,11 +8,12 @@
                 <div class="components-preview mx-auto">
                     <div class="nk-block-head nk-block-head-lg wide-sm">
                         <div class="nk-block-head-content">
-                            <h2 class="nk-block-title fw-normal">Product</h2>
+                            <h2 class="nk-block-title fw-normal">Products</h2>
                             <nav>
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url("/") }}">{{ env('APP_NAME') }}</a></li>
-                                    <li class="breadcrumb-item"><a href="">Product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.product.index') }}">Products</a></li>
+                                    <li class="breadcrumb-item active">Form</li>
                                 </ul>
                             </nav>
                         </div>
@@ -49,10 +50,10 @@
                                                <select class="select2" name="category_id" id="category_id" data-placeholder="-- Select Category --" required>
                                                 <option value="" selected hidden></option>
                                                 @foreach ($categories as $category)
-                                                @if (empty($model))
+                                                @if (empty($product))
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @else
-                                                <option value="{{ $category->id }}" {{ $category->id == $model->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                                                 @endif
                                                 @endforeach
                                                </select>

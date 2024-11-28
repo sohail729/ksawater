@@ -13,6 +13,7 @@ class Team extends Authenticatable
      */
     protected $table = 'team';
     protected $guard = 'team';
+    public $timestamps = false;
     protected $guarded = [];
 
     // public function setPasswordAttribute($value)
