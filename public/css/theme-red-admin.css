@@ -47,10 +47,10 @@
 .is-dark .nk-menu-sub .active > .nk-menu-link,
 .is-dark .nk-menu-link:hover, .is-dark .active > .nk-menu-link,
 .is-dark .nk-menu-link:hover .nk-menu-icon, .is-dark .nk-menu-item.active > .nk-menu-link .nk-menu-icon, .is-dark .nk-menu-item.current-menu > .nk-menu-link .nk-menu-icon {
-  color: #e8757d;
+  color: #008C7F;
 }
 .is-dark .nk-news-icon .icon {
-  color: #e14954;
+  color: #008C7F;
 }
 .is-dark .nk-news-text .icon {
   color: #8094ae;
@@ -98,7 +98,7 @@
 .nk-msg-menu-item a:after,
 .ui-shady .nk-msg-item.active:after, .ui-shady .nk-msg-item.current:after,
 .ui-softy .nk-msg-item.active:after, .ui-softy .nk-msg-item.current:after {
-  background: #e14954;
+  background: #008C7F;
 }
 
 .card-bordered.is-dark {
@@ -110,11 +110,11 @@
 }
 
 .user-avatar, [class^=user-avatar]:not([class*=-group]) {
-  background: #e8757d;
+  background: #008C7F;
 }
 
 .nk-news-item:hover .nk-news-text .icon {
-  color: #e8757d;
+  color: #008C7F;
 }
 
 .nk-menu-link:hover,
@@ -185,7 +185,7 @@
 .is-unread .chat-context .status,
 .add-opt:hover .sub-text, .add-opt:hover .icon,
 .icon[class*=bg-primary-dim] {
-  color: #e14954;
+  color: #008C7F;
 }
 
 a:hover {
@@ -193,7 +193,7 @@ a:hover {
 }
 
 .text-primary, .link-primary {
-  color: #e14954 !important;
+  color: #008C7F !important;
 }
 
 .link-primary:hover, a.text-primary:hover, a.text-primary:focus, .chat-upload-option a:hover {
@@ -201,7 +201,7 @@ a:hover {
 }
 
 .border-primary, .nk-kycfm-control:checked ~ .nk-kycfm-label {
-  border-color: #e14954 !important;
+  border-color: #008C7F !important;
 }
 
 .bg-lighter {
@@ -209,7 +209,7 @@ a:hover {
 }
 
 .bg-primary {
-  background-color: #e14954 !important;
+  background-color: #008C7F !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
@@ -225,8 +225,8 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .alert-primary, .badge-dim.bg-outline-primary {
-  background-color: #fcedee;
-  border-color: #f3b6bb;
+    background-color: #cee0de;
+    border-color: #63cec4;
 }
 
 .alert-pro.alert-primary, .bg-primary,
@@ -236,7 +236,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before,
 .select2-container--default .select2-selection--single:focus,
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-  border-color: #e14954;
+  border-color: #008C7F;
 }
 
 .nk-order-ovwg-data.sell, .bg-outline-primary {
@@ -244,18 +244,18 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .dropdown-menu-s1 {
-  border-top-color: #e14954;
+  border-top-color: #008C7F;
 }
 
 .nk-iv-wg2-amount.ui-v2 {
-  border-bottom-color: #e14954;
+  border-bottom-color: #008C7F;
 }
 
 .page-item.active .page-link,
 .custom-control-input:checked ~ .custom-control-label::before,
 .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
-  background-color: #e14954;
-  border-color: #e14954;
+  background-color: #008C7F;
+  border-color: #008C7F;
 }
 
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before,
@@ -274,18 +274,18 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .nk-error-head {
-  background: -webkit-linear-gradient(#e14954, #8b3636);
+  background: -webkit-linear-gradient(#008C7F, #8b3636);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .nav-switch .nav-link.active {
-  background: #e14954;
+  background: #008C7F;
   color: #ffffff;
 }
 
 .icon-avatar {
-  color: #e14954;
+  color: #008C7F;
   background-color: #fbe4e5;
 }
 
@@ -294,8 +294,8 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .btn-primary {
-  background-color: #e14954;
-  border-color: #e14954;
+  background-color: #008C7F;
+  border-color: #008C7F;
 }
 .btn-primary:hover {
   background-color: #de3744;
@@ -306,13 +306,13 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   border-color: #dd2f3b;
 }
 .btn-primary.btn-dim {
-  color: #e14954;
+  color: #008C7F;
   background-color: #fcebec;
   border-color: #fcebec;
 }
 
 .btn-dim.btn-outline-primary {
-  color: #e14954;
+  color: #008C7F;
   background-color: #fcebec;
   border-color: #f3b6bb;
 }
@@ -321,12 +321,12 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .btn-outline-primary {
-  border-color: #e14954;
-  color: #e14954;
+  border-color: #008C7F;
+  color: #008C7F;
 }
 .btn-outline-primary:hover {
-  background-color: #e14954;
-  border-color: #e14954;
+  background-color: #008C7F;
+  border-color: #008C7F;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -385,8 +385,8 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .btn-outline-primary:not(:disabled):not(.disabled).active,
 .show > .btn-outline-primary.dropdown-toggle,
 .btn-primary.disabled, .btn-primary:disabled {
-  background-color: #e14954;
-  border-color: #e14954;
+  background-color: #008C7F;
+  border-color: #008C7F;
 }
 
 .form-focus-none:focus {
@@ -396,7 +396,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 
 @media (min-width: 992px) {
   .nk-menu-main > li > .nk-menu-link:before {
-    background: #e14954;
+    background: #008C7F;
   }
   .is-theme .nk-menu-main > li > .nk-menu-link {
     color: #f5bfc3;
@@ -407,7 +407,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 .datepicker table tr td.today, .datepicker table tr td.today:hover, .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:hover {
   background-color: #fbe4e5;
-  color: #e14954;
+  color: #008C7F;
 }
 
 .datepicker table tr td.today:hover, .datepicker table tr td.today:hover:hover,
@@ -428,7 +428,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .datepicker table tr td.active.active, .datepicker table tr td.active:hover.active,
 .datepicker table tr td.active.disabled.active, .datepicker table tr td.active.disabled:hover.active,
 .datepicker table tr td span:hover, .datepicker table tr td span.focused {
-  background-color: #e14954;
+  background-color: #008C7F;
 }
 
 .code-tag {
@@ -466,7 +466,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .active .nk-ibx-menu-item .icon,
 .nk-reply-form-nav li a:hover,
 .nk-reply-form-input .toggle-opt:hover {
-  color: #e14954;
+  color: #008C7F;
 }
 
 .nk-ibx-menu li.active {
@@ -479,7 +479,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 
 .nk-file-name .asterisk .icon, .nk-file-name-text a.title:hover,
 .nk-file-link:hover .title, .active .nk-fmg-menu-item .icon, .active .nk-fmg-menu-text {
-  color: #e14954;
+  color: #008C7F;
 }
 
 .nk-files-view-list .nk-file.selected {
@@ -487,37 +487,37 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .chat.is-me .chat-msg {
-  background-color: #e14954;
+  background-color: #008C7F;
 }
 
 .kanban-add-task {
-  color: #e14954;
+  color: #008C7F;
 }
 .kanban-add-task:hover {
-  background: #e14954;
-  border-color: #e14954;
+  background: #008C7F;
+  border-color: #008C7F;
 }
 
 .actions ul li a {
-  border-color: #e14954;
-  background: #e14954;
+  border-color: #008C7F;
+  background: #008C7F;
 }
 
 .nk-wizard-simple .steps ul li.done h5, .nk-wizard-simple .steps ul li.done .number, .nk-wizard-simple .steps ul li.current h5, .nk-wizard-simple .steps ul li.current .number {
-  color: #e14954;
+  color: #008C7F;
 }
 
 .nk-wizard-simple .steps ul li:after {
-  background: #e14954;
+  background: #008C7F;
 }
 
 .invoice-contact ul .icon, .invoice-desc .title, .invoice-bills .table th {
-  color: #e14954;
+  color: #008C7F;
 }
 
 .product-gallery .slider-nav .slider-item.slick-current .thumb,
 .custom-control-pro.no-control .custom-control-input:checked ~ .custom-control-label,
 .custom-control-pro.no-control .custom-control-input:not(:disabled):active ~ .custom-control-label,
 .custom-control.color-control .custom-control-label:before {
-  border-color: #e14954 !important;
+  border-color: #008C7F !important;
 }

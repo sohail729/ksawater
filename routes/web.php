@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DriverController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\SettingsController;
@@ -39,7 +40,7 @@ use App\Http\Controllers\SettingsController;
 */
 
    Route::get('/', function () {
-        return redirect()->route('cpanelShowLogin');
+        return redirect()->route('admin.cpanelShowLogin');
     });
 
 // Route::middleware(['locale'])->group(function () {
@@ -105,10 +106,10 @@ use App\Http\Controllers\SettingsController;
 // Admin Routes
 
 
-Route::get('cpanel', [AdminLoginController::class, 'cpanelShowLogin'])->name('cpanelShowLogin');
+Route::get('admin', [AdminLoginController::class, 'cpanelShowLogin'])->name('admin.cpanelShowLogin')->middleware('auth.redirect');
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admin']], function() {
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
@@ -126,14 +127,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+    //Orders Routes
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('orders/get', [OrderController::class, 'getOrdersList'])->name('orders.list.get');
+    Route::get('orders/{orderID}/view', [OrderController::class, 'viewOrder'])->name('orders.view');
+    // Route::get('categories/create', [CategoryController::class, 'create'])->name('category.create');
+    // Route::post('categories/store', [CategoryController::class, 'store'])->name('category.store');
+    // Route::put('/categories{category}/update', [CategoryController::class, 'update'])->name('category.update');
+    // Route::get('categories{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    // Route::delete('categories{category}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');
 
     //Category Routes
     Route::get('categories', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('categoriescreate', [CategoryController::class, 'create'])->name('category.create');
-    Route::post('categoriesstore', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('categories/store', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/categories{category}/update', [CategoryController::class, 'update'])->name('category.update');
-    Route::get('categories{brand}/edit', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::delete('categories{brand}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('categories{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::delete('categories{category}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');
 
     //Banners Routes
     Route::get('banners/create', [BannersController::class, 'create'])->name('banner.create');

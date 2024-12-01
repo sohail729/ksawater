@@ -36,6 +36,7 @@
                                             <th>Category</th>
                                             <th>Name</th>
                                             <th>Price</th>
+                                            <th>Stock</th>
                                             <th>Volume</th>
                                             <th>Bundle</th>
                                             <th>Description</th>
@@ -51,22 +52,29 @@
                                             <td>{{ $product->category->name }}</td>
                                             <td>{{ $product->title }}</td>
                                             <td>{{ $product->price }}</td>
+                                            <td>
+                                                @empty($product->stock)
+                                                <span class="badge badge-xs bg-outline-danger">Out of stock</span>
+                                                @else
+                                                {{ $product->stock }}
+                                                @endempty
+                                            </td>
                                             <td>{{ $product->volume }} {{ $product->unit }}</td>
                                             <td>{{ $product->bundle }}</td>
                                             <td>{{ $product->description }}</td>
                                             <td>
                                                 @if ($product->status)
-                                                <span class="badge badge-sm bg-outline-success">Active</span>
+                                                <span class="badge badge-xs bg-outline-success">Active</span>
                                                 @else
-                                                <span class="badge badge-sm bg-outline-danger">Inactive</span>
+                                                <span class="badge badge-xs bg-outline-danger">Inactive</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a class="btn btn-info btn-sm"
+                                                    <a class="btn btn-info btn-xs"
                                                     href='{{ route("admin.product.edit", $product->id) }}'><em
                                                         class="icon ni ni-edit"></em></a>
-                                                    <a class="btn btn-danger btn-sm delete" href='javascript:void(0)' data-id='{{ $product->id }}' data-route='{{ route("admin.product.destroy", $product->id) }}'><em class="icon ni ni-trash"></em></a>
+                                                    <a class="btn btn-danger btn-xs delete" href='javascript:void(0)' data-id='{{ $product->id }}' data-route='{{ route("admin.product.destroy", $product->id) }}'><em class="icon ni ni-trash"></em></a>
                                                 </div>
                                             </td>
 

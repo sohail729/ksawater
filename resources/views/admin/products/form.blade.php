@@ -112,6 +112,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="fv-full-name">Stock *</label>
+                                            <div class="form-control-wrap">
+                                                <input type="number" name="stock" id="stock" class="form-control" placeholder="E.g 300" value="{{ $product->stock ?? ''}}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="fv-full-name">Status *</label>
+                                            <select class="select2" name="status" id="status" data-placeholder="-- Select Status --" required>
+                                                <option value="1" {{ !empty($product) && $product->status == 1 ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ !empty($product) && $product->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                               </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <input type="submit" class="btn btn-success" value="Save">

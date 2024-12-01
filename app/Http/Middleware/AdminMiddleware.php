@@ -9,11 +9,13 @@ class AdminMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->type == 'admin') {
+        // dd(auth('team')->check());
+        if (auth('team')->check()) {
+            if (auth('team')->user()->type == 'admin') {
                 return $next($request);
+                // return redirect()->route('admin.dashboard');
             }
         }
-        return redirect()->route('cpanelShowLogin');
+        return redirect()->route('admin.cpanelShowLogin');
     }
 }

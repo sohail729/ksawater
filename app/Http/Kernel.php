@@ -62,9 +62,9 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
-        // 'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        // 'dealer' => \App\Http\Middleware\DealerMiddleware::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'auth.admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'auth.redirect' => \App\Http\Middleware\RedirectIfAdminMiddleware::class,
         // 'locale' => \App\Http\Middleware\LocaleMiddleware::class,
     ];
 }

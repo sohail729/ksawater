@@ -17,6 +17,15 @@ if(!function_exists('carBrands')){
     }
 }
 
+if(!function_exists('generateUniqueOrderNumber')){
+    function generateUniqueOrderNumber() {
+        // Generate 6 bytes of random data and convert to hexadecimal
+        $randomBytes = strtoupper(bin2hex(random_bytes(6)));
+        // Split into two 6-character groups separated by a dash
+        return substr($randomBytes, 0, 6) . '-' . substr($randomBytes, 6, 6);
+    }
+}
+
 if(!function_exists('num2word')){
 function num2word($n){if(empty($n))return null;$w=[1=>'One',2=>'Two',3=>'Three',4=>'Four',5=>'Five',6=>'Six',7=>'Seven',8=>'Eight',9=>'Nine'];return($n>=1&&$n<=9)?$w[$n]:null;}
 }

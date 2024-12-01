@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-        content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fav Icon  -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/icon.png') }}" />
     <!-- Page Title  -->
@@ -47,13 +47,25 @@
                             <ul class="nk-menu">
                                 <li class="nk-menu-item">
                                     <a href="{{  route('admin.dashboard') }}" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-dashboard"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
                                         <span class="nk-menu-text">Dashboard</span>
                                     </a>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
+                                    <a href="{{ route('admin.orders.index') }}" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-bag-fill"></em></span>
+                                        <span class="nk-menu-text">Orders</span>
+                                    </a>
+                                </li><!-- .nk-menu-item -->
+                                <li class="nk-menu-item has-sub">
+                                    <a href="" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-user-list-fill"></em></span>
+                                        <span class="nk-menu-text">Customers</span>
+                                    </a>
+                                </li><!-- .nk-menu-item -->
+                                <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-list-thumb-fill"></em></span>
                                         <span class="nk-menu-text">Category</span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -69,7 +81,7 @@
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-package-fill"></em></span>
                                         <span class="nk-menu-text">Products</span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -85,7 +97,7 @@
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
                                         <span class="nk-menu-text">Drivers</span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -101,7 +113,7 @@
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-img"></em></span>
                                         <span class="nk-menu-text">Banners</span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -193,7 +205,7 @@
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-setting"></em></span>
+                                        <span class="nk-menu-icon"><em class="icon ni ni-opt-alt-fill"></em></span>
                                         <span class="nk-menu-text">Settings</span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -346,9 +358,13 @@
     <!-- JavaScript -->
     <script src="{{ asset('js/dashlite/bundle.js') }}"></script>
     <script src="{{ asset('js/dashlite/scripts.js') }}"></script>
-    @stack('scripts')
-
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+
         $(document).on('click', '.delete', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
@@ -395,6 +411,8 @@
         window.history.back();
     }
     </script>
+
+@stack('scripts')
 </body>
 
 

@@ -48,7 +48,7 @@ class APIController extends Controller
             return $this->responseJson(400, 'Category id is required!');
         }
 
-        $products = Product::where('category_id', $category_id)->get();
+        $products = Product::where('category_id', $category_id)->where('status', 1)->get();
         return $this->responseJson(200, 'Products List By Category.', $products);
     }
 
@@ -88,13 +88,16 @@ class APIController extends Controller
         $userID = $request->user_id;
         if($request->user_id != 1000 && $request->is_new_user){
             $rules = [
-                'email' => 'required|email:rfc,dns,strict|unique:users,email'
+                'email' => 'required|email:rfc,dns,strict|unique:users,email',
+                'password' => 'required|min:3'
             ];
 
             $validator = Validator::make($request->all(), $rules, [
                 'email.required' => 'Email is required',
                 'email.email' => 'Email must be a valid email address',
-                'email.unique' => 'Email must be unique'
+                'email.unique' => 'Email must be unique',
+                'password.required' => 'Password is required',
+                'password.min' => 'Password must have atleast 3 characters'
             ]);
 
             if ($validator->fails()) {
@@ -112,8 +115,27 @@ class APIController extends Controller
             $userID = $user->id;
         }
 
+        if (!empty($request->items)) {
+            $productIds = array_map(function ($item) {
+                return $item['product_id'];
+            }, $request->items);
+            $products = Product::whereIn('id', $productIds)->get();
+            $outofstock = [];
+            foreach ($products as $key => $product) {
+                if($product['stock'] == 0 || $product['status'] == 0){
+                    $outofstock[$key]['id'] = $product['id'];
+                    $outofstock[$key]['name'] = $product['title'];
+                }
+            }
+
+            if(count($outofstock) > 0 ){
+                return $this->responseJson(200, 'Some items are not available at the moment.', null, $outofstock);
+            }
+        }
+
         $order = new Order();
         $order->user_id = $userID;
+        $order->order_number = generateUniqueOrderNumber();
         $order->fullname = $request->fullname;
         $order->email = $request->email;
         $order->amount = number_format($request->amount, 2);
@@ -134,16 +156,17 @@ class APIController extends Controller
             $productIds = array_map(function ($item) {
                 return $item['product_id'];
             }, $request->items);
-            $products = Product::whereIn('id', $productIds)->get()->toArray();
+
             foreach ($request->items as $key => $item) {
                 $detail = new OrderDetail();
                 $detail->order_id = $order->id;
                 $detail->price = $item['price'];
                 $detail->qty = $item['qty'];
-                $detail->product_name = $products[$key]['title'];
+                $detail->product_name = $products[$key]->title;
                 $detail->product_id = $item['product_id'];
                 $detail->total = number_format($item['price'], 2) * $item['qty'];
                 $detail->save();
+                $products[$key]->decrement('stock');
             }
         }
 

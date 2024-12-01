@@ -53,6 +53,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->volume = $request->volume;
         $product->unit = $request->unit;
+        $product->stock = $request->stock;
         $product->bundle = $request->bundle;
 
         if ($request->file('image')) {
@@ -104,25 +105,31 @@ class ProductController extends Controller
     {
         if(!empty($request->image)){
             $request->validate([
-                'image' => 'required|image',
+                'image' => 'image',
             ]);
         }
 
         $product->title = $request->title;
         $product->status = $request->status;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        $product->volume = $request->volume;
+        $product->unit = $request->unit;
+        $product->stock = $request->stock;
+        $product->bundle = $request->bundle;
 
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = uniqid(time()) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('uploads/Products', $filename, 'public');
-            unlink(public_path('storage/uploads/Products/'. $product->image));
+            $file->storeAs('uploads/products', $filename, 'public');
+            unlink(public_path('storage/uploads/products/'. $product->image));
             $product->image =  $filename;
         }
-
         $product->save();
         if($product){
             $request->session()->flash('alert-success', 'Product updated!');
-            return redirect()->route('admin.products.index');
+            return redirect()->route('admin.product.index');
         }
         $request->session()->flash('alert-danger', 'Something went wrong!');
         return redirect()->back();

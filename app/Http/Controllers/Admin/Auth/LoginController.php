@@ -49,17 +49,14 @@ class LoginController extends Controller
             if (Auth::guard('team')->check() && Auth::guard('team')->user()->type == 'admin') {
                 return redirect()->intended('admin/dashboard');
             }
-            $request->session()->flash('alert-danger', 'Only admins can login.');
-            return redirect()->route('cpanelShowLogin');
-        } else {
-            $request->session()->flash('alert-danger', 'Incorrect Email/Password!');
-            return redirect()->route('cpanelShowLogin');
         }
+        $request->session()->flash('alert-danger', 'Incorrect Email/Password!');
+        return redirect()->route('admin.cpanelShowLogin');
     }
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('cpanelShowLogin');
+        Auth::guard('team')->logout();
+        return redirect()->route('admin.cpanelShowLogin');
     }
 }
