@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
                                 </div><!-- .col --> --}}
-                                <div class="col-lg-3 col-xxl-12">
+                                {{-- <div class="col-lg-3 col-xxl-12">
                                     <div class="row g-gs">
                                         <div class="col-sm-6 col-lg-12 col-xxl-6">
                                             <div class="card card-bordered">
@@ -93,7 +93,7 @@
                                                             <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total earnings from subscriptions to date."></em>
                                                         </div>
                                                     </div>
-                                                    {{-- <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                         <div class="nk-sale-data">
                                                             <span class="amount">&euro; {{ $totalEarnings }}</span>
                                                             <span class="sub-title">
@@ -101,13 +101,13 @@
                                                         <div class="nk-sales-ck">
                                                             <canvas class="sales-bar-chart" id="activeSubscription"></canvas>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </div><!-- .card -->
                                         </div><!-- .col -->
                                     </div><!-- .row -->
-                                </div><!-- .col -->
-                                <div class="col-lg-3 col-xxl-12">
+                                </div><!-- .col --> --}}
+                                {{-- <div class="col-lg-3 col-xxl-12">
                                     <div class="row g-gs">
                                         <div class="col-sm-6 col-lg-12 col-xxl-6">
                                             <div class="card card-bordered">
@@ -120,7 +120,7 @@
                                                             <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total active/expired subscriptions"></em>
                                                         </div>
                                                     </div>
-                                                    {{-- <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                         <div class="nk-sale-data">
                                                             <span class="amount">{{ $activeSubs }}  <span class="sub-title">Active</span></span>
                                                             <span class="amount">{{ $expiredSubs }} <span class="sub-title">Expired</span></span>
@@ -128,13 +128,13 @@
                                                         <div class="nk-sales-ck">
                                                             <canvas class="sales-bar-chart" id="activeSubscription"></canvas>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </div><!-- .card -->
                                         </div><!-- .col -->
                                     </div><!-- .row -->
-                                </div><!-- .col -->
-                                <div class="col-lg-3 col-xxl-12">
+                                </div><!-- .col --> --}}
+                                {{-- <div class="col-lg-3 col-xxl-12">
                                     <div class="row g-gs">
                                         <div class="col-sm-6 col-lg-12 col-xxl-6">
                                             <div class="card card-bordered">
@@ -147,7 +147,7 @@
                                                             <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total cars listed to date"></em>
                                                         </div>
                                                     </div>
-                                                    {{-- <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                         <div class="nk-sale-data">
                                                             <span class="amount">{{ $listedCars }} <span class="sub-title">Total</span> / {{ $onRentCars }} <span class="sub-title">On Rent</span> </span>
                                                             <span class="sub-title">
@@ -155,13 +155,13 @@
                                                         <div class="nk-sales-ck">
                                                             <canvas class="sales-bar-chart" id="activeSubscription"></canvas>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </div><!-- .card -->
                                         </div><!-- .col -->
                                     </div><!-- .row -->
-                                </div><!-- .col -->
-                                <div class="col-lg-3 col-xxl-12">
+                                </div><!-- .col --> --}}
+                                {{-- <div class="col-lg-3 col-xxl-12">
                                     <div class="row g-gs">
                                         <div class="col-sm-6 col-lg-12 col-xxl-6">
                                             <div class="card card-bordered">
@@ -174,7 +174,7 @@
                                                             <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Number of website visits"></em>
                                                         </div>
                                                     </div>
-                                                    {{-- <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                         <div class="nk-sale-data">
                                                             <span class="amount">{{ $total_vists }} / {{ $unique_visits }}</span>
                                                             <span class="sub-title">
@@ -182,12 +182,12 @@
                                                         <div class="nk-sales-ck">
                                                             <canvas class="sales-bar-chart" id="activeSubscription"></canvas>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </div><!-- .card -->
                                         </div><!-- .col -->
                                     </div><!-- .row -->
-                                </div><!-- .col -->
+                                </div><!-- .col --> --}}
                             </div><!-- .row -->
                         </div><!-- .col -->
                         {{-- <div class="col-xxl-8">
