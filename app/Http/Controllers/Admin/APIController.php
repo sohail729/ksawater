@@ -86,50 +86,57 @@ class APIController extends Controller
         }
 
         $userID = $request->user_id;
-        if($request->user_id != 1000 && $request->is_new_user){
-            $rules = [
-                'email' => 'required|email:rfc,dns,strict|unique:users,email',
-                'password' => 'required|min:3'
-            ];
+        if($request->user_id == 1000 && $request->is_new_user){
+            $oldUser = User::where('email', $request->email)->first();
+            if($oldUser){
+                $userID = $oldUser->id;
+            }else{
+                $rules = [
+                    'email' => 'required|email:rfc,dns,strict|unique:users,email',
+                    'password' => 'required|min:3'
+                ];
 
-            $validator = Validator::make($request->all(), $rules, [
-                'email.required' => 'Email is required',
-                'email.email' => 'Email must be a valid email address',
-                'email.unique' => 'Email must be unique',
-                'password.required' => 'Password is required',
-                'password.min' => 'Password must have atleast 3 characters'
-            ]);
+                $validator = Validator::make($request->all(), $rules, [
+                    'email.required' => 'Email is required',
+                    'email.email' => 'Email must be a valid email address',
+                    'email.unique' => 'Email must be unique',
+                    'password.required' => 'Password is required',
+                    'password.min' => 'Password must have atleast 3 characters'
+                ]);
 
-            if ($validator->fails()) {
-                return $this->responseJson(422, null, null, $validator->messages()->all());
+                if ($validator->fails()) {
+                    return $this->responseJson(422, null, null, $validator->messages()->all());
+                }
+
+                $userData['fullname'] = $request->fullname;
+                $userData['phone'] = $request->phone;
+                $userData['email'] = $request->email;
+                $userData['postal'] = $request->postal;
+                $userData['status'] = 1;
+                $userData['address'] = $request->address;
+                $userData['password'] = bcrypt($request->password);
+                $user = User::create($userData);
+                $userID = $user->id;
             }
-
-            $userData['fullname'] = $request->fullname;
-            $userData['phone'] = $request->phone;
-            $userData['email'] = $request->email;
-            $userData['postal'] = $request->postal;
-            $userData['status'] = 1;
-            $userData['address'] = $request->address;
-            $userData['password'] = bcrypt($request->password);
-            $user = User::create($userData);
-            $userID = $user->id;
         }
 
+        $outofstock = [];
         if (!empty($request->items)) {
             $productIds = array_map(function ($item) {
                 return $item['product_id'];
             }, $request->items);
             $products = Product::whereIn('id', $productIds)->get();
-            $outofstock = [];
             foreach ($products as $key => $product) {
-                if($product['stock'] == 0 || $product['status'] == 0){
-                    $outofstock[$key]['id'] = $product['id'];
-                    $outofstock[$key]['name'] = $product['title'];
+                $i = 0;
+                if($product['stock'] <= 0 || $product['status'] == 0){
+                    $outofstock['items'][$i]['id'] = $product['id'];
+                    $outofstock['items'][$i]['name'] = $product['title'];
+                    $i++;
                 }
             }
-
             if(count($outofstock) > 0 ){
-                return $this->responseJson(200, 'Some items are not available at the moment.', null, $outofstock);
+                $outofstock['out_of_stock'] = true;
+                return $this->responseJson(200, 'Some items are not available at the moment.', $outofstock);
             }
         }
 
@@ -157,7 +164,16 @@ class APIController extends Controller
                 return $item['product_id'];
             }, $request->items);
 
-            foreach ($request->items as $key => $item) {
+            $items = $request->items;
+            if(count($outofstock) > 0 ){
+                $outOfStockIDs = array_column($outofstock, 'id');
+                $filteredItems = array_filter($items, function ($item) use ($outOfStockIDs) {
+                    return !in_array($item['product_id'], $outOfStockIDs);
+                });
+                $items = $filteredItems;
+            }
+
+            foreach ($items as $key => $item) {
                 $detail = new OrderDetail();
                 $detail->order_id = $order->id;
                 $detail->price = $item['price'];

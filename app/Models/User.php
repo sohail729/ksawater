@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use SoftDeletes, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -35,8 +35,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
         'updated_at',
-        'email_verified_at',
-        'deleted_at',
+        'email_verified_at'
     ];
 
     /**

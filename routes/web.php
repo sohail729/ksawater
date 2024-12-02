@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\CarBrandController;
 use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DriverController;
@@ -169,6 +170,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     Route::get('drivers/{driver}/edit', [DriverController::class, 'edit'])->name('drivers.edit');
     Route::put('/drivers/{driver}/update', [DriverController::class, 'update'])->name('drivers.update');
     Route::delete('drivers/{driver}/delete', [DriverController::class, 'destroy'])->name('drivers.destroy');
+
+    //Drivers Routes
+    // Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::get('customers/list', [CustomerController::class, 'index'])->name('customers.index');
+    // Route::post('customers/store', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('customers/{user}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::put('/customers/{user}/update', [CustomerController::class, 'update'])->name('customers.update');
+    // Route::delete('customers/{customer}/delete', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
 
 

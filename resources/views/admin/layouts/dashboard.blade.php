@@ -11,7 +11,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/icon.png') }}" />
     <!-- Page Title  -->
-    <title>Now2Rent | Admin Panel</title>
+    <title>KSA Water | Admin Panel</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/dashlite-admin.css') }}">
@@ -58,7 +58,7 @@
                                     </a>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
-                                    <a href="" class="nk-menu-link">
+                                    <a href="{{ route('admin.customers.index') }}" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-user-list-fill"></em></span>
                                         <span class="nk-menu-text">Customers</span>
                                     </a>
@@ -129,98 +129,10 @@
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item has-sub">
                                     <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-list-index-fill"></em></span>
-                                        <span class="nk-menu-text">Cars</span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.cars.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">View</span></a>
-                                        </li>
-                                    </ul><!-- .nk-menu-sub -->
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-table-view"></em></span>
-                                        <span class="nk-menu-text">Brands</span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.brands.create') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">New</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.brands.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">View</span></a>
-                                        </li>
-                                    </ul><!-- .nk-menu-sub -->
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-truck"></em></span>
-                                        <span class="nk-menu-text">Models</span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.models.create') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">New</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.models.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">View</span></a>
-                                        </li>
-                                    </ul><!-- .nk-menu-sub -->
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-list-thumb-fill"></em></span>
-                                        <span class="nk-menu-text">Types</span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.types.create') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">New</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.types.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">View</span></a>
-                                        </li>
-                                    </ul><!-- .nk-menu-sub -->
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-img"></em></span>
-                                        <span class="nk-menu-text">Ad Banners</span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.advertisement.create') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">New</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.advertisement.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">View</span></a>
-                                        </li>
-                                    </ul><!-- .nk-menu-sub -->
-                                </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-item has-sub">
-                                    <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
                                         <span class="nk-menu-icon"><em class="icon ni ni-opt-alt-fill"></em></span>
                                         <span class="nk-menu-text">Settings</span>
                                     </a>
                                     <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.plans.index') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">Subscription Plans</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.get.cities') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">All Cities</span></a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="{{ route('admin.contact.showQueriesList') }}" class="nk-menu-link"><span
-                                                    class="nk-menu-text">Contact Queries</span></a>
-                                        </li>
                                         <li class="nk-menu-item">
                                             <a href="{{ route('clear-cache') }}" class="nk-menu-link"><span
                                                     class="nk-menu-text">Clear Cache</span></a>
