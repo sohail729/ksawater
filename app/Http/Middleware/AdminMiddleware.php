@@ -10,8 +10,8 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         // dd(auth('team')->check());
-        if (auth('team')->check()) {
-            if (auth('team')->user()->type == 'admin') {
+        if (auth('admin')->check()) {
+            if (auth('admin')->user()->type == 'admin') {
                 return $next($request);
                 // return redirect()->route('admin.dashboard');
             }

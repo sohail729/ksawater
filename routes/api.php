@@ -24,14 +24,24 @@ use Illuminate\Support\Facades\Route;
 
 
 
+// Route::middleware(['auth.user'])->group(function () {
+
+// });
 
 
 
+Route::post('riderLogin', [APIController::class, 'riderLogin']);
+Route::post('customerLogin', [APIController::class, 'customerLogin']);
+
+Route::get('searchByQuery', [APIController::class, 'searchByQuery']);
 Route::get('getConfig', [APIController::class, 'getConfig']);
 Route::get('getProductsByCategory', [APIController::class, 'getProductsByCategory']);
+Route::get('getProductById', [APIController::class, 'getProductById']);
 Route::post('createOrder', [APIController::class, 'createOrder']);
+Route::post('updateRiderAction', [APIController::class, 'updateRiderAction']);
 Route::post('createCustomer', [APIController::class, 'createCustomer']);
 Route::get('/payment/callback/{order_id}', [APIController::class, 'paymentCallback'])->name('payment.callback');
+Route::post('sendOTP', [APIController::class, 'sendOTP']);
 
 // // Authentication Routes...
 // Route::post('register', [AuthController::class, 'register']);

@@ -2,22 +2,91 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\NetworkHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\DeliveryLogs;
+use App\Models\Donation;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentLogs;
 use App\Models\Product;
+use App\Models\Team;
 use App\Models\User;
+use App\Models\UserPhoneOTP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Stripe\Checkout\Session;
-use Stripe\Customer;
 
 class APIController extends Controller
 {
+
+    public function riderLogin(Request $request){
+        if(empty($request->phone) || empty($request->password)){
+            return $this->responseJson(400, 'Invalid credentials.');
+        }
+
+        $rider = Team::where('phone', $request->phone)->where('type', 'rider')->first();
+        if(empty($rider)){
+            return $this->responseJson(400, 'Rider doesn\'t exists.');
+        }
+
+        if($rider->status == 0){
+            return $this->responseJson(400, 'Your account has been blocked. Please contact the administrator for further assistance.');
+        }
+
+        if (!$token = auth()->guard('rider')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+            return $this->responseJson(400, 'Invalid Credentials.');
+        }
+
+        $riderData['id'] = $rider->id;
+        $riderData['fullname'] = $rider->fullname;
+        $riderData['phone'] = $rider->phone;
+        $riderData['email'] = $rider->email;
+        $riderData['token'] = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('rider')->factory()->getTTL() * 60 // TTL in seconds
+        ];
+        $riderData['created_at'] = $rider->created_at;
+        if(auth()->guard('rider')){
+            return $this->responseJson(200, 'Logged in successfully', $riderData);
+        }
+        return $this->responseJson(400, 'Login Failed.');
+    }
+
+    public function customerLogin(Request $request){
+        if(empty($request->phone) || empty($request->password)){
+            return $this->responseJson(400, 'Invalid credentials.');
+        }
+
+        $user = User::where('phone', $request->phone)->first();
+        if(empty($user)){
+            return $this->responseJson(400, 'User doesn\'t exists.');
+        }
+
+        if($user->status == 0){
+            return $this->responseJson(400, 'Your account has been temporarily blocked. Please reach out to support for more information.');
+        }
+
+        $token = auth()->guard('api')->login($user);
+        $userData['id'] = $user->id;
+        $userData['fullname'] = $user->fullname;
+        $userData['phone'] = $user->phone;
+        $userData['email'] = $user->email;
+        $userData['token'] = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60 // TTL in seconds
+        ];
+        $userData['created_at'] = $user->created_at;
+        if(auth()->guard('api')){
+            return $this->responseJson(200, 'Logged in successfully', $userData);
+        }
+        return $this->responseJson(400, 'Login Failed.');
+    }
 
     public function getConfig(){
         $categories = Category::all();
@@ -52,6 +121,89 @@ class APIController extends Controller
         return $this->responseJson(200, 'Products List By Category.', $products);
     }
 
+    public function getProductById(Request $request){
+        $product_id = $request->product_id;
+
+        if(empty($product_id)){
+            return $this->responseJson(400, 'Category id is required!');
+        }
+
+        $product = Product::where('id', $product_id)->where('status', 1)->first();
+        if($product){
+            return $this->responseJson(200, 'Product By Id', $product);
+        }
+        return $this->responseJson(400, 'Product Not Found.');
+    }
+
+    public function searchByQuery(Request $request){
+        $query = $request->input('query');
+
+        $keywords = explode(' ', $query);
+        $products = Product::query()->where('status', 1);
+
+        $products->where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhere('title', 'LIKE', "%{$keyword}%")
+                    ->orWhere('description', 'LIKE', "%{$keyword}%");
+            }
+        });
+        $products = $products->get();
+        if($products){
+            return $this->responseJson(200, 'Searched Products By Query', $products);
+        }
+        return $this->responseJson(400, 'Products Not Found.');
+    }
+
+    public function updateRiderAction(Request $request){
+        Log::debug("updateRiderAction Data: ". json_encode($request->all()));
+        $orderID = $request->order_id;
+        $riderID = $request->rider_id;
+        $status = $request->status;
+
+        $rules = [
+            'order_id' => 'required',
+            'rider_id' => 'required',
+            'status' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, [
+            'order_id.required' => 'Order id is required',
+            'rider_id.required' => 'Rider id is required',
+            'status.required' => 'Status is required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->responseJson(422, null, null, $validator->messages()->all());
+        }
+
+        $order = Order::find($orderID);
+        if($order){
+            $rider = Team::find($riderID);
+            $order->update([
+                'rider_id' => $rider->id,
+                'rider_name' => $rider->fullname,
+                'rider_phone' => $rider->phone,
+                'status' => $status,
+                'reject_reason' => $request->reject_reason ?? ""
+            ]);
+
+            $logs = DeliveryLogs::create([
+                'order_id' => $order->id,
+                'rider_id' => $rider->id,
+                'status' => $status,
+                'created_at' => now()->format('Y-m-d H:i:s')
+            ]);
+
+            if($status == 'rejected'){
+                $product_ids = $order->detail ? $order->detail->pluck('product_id') : collect();
+                Product::whereIn('id', $product_ids)->increment('stock');
+            }
+
+            return $this->responseJson(200, 'Rider Action Updated.');
+        }
+        return $this->responseJson(400, 'Order not found.');
+    }
+
     public function createOrder(Request $request){
         Log::debug("Order Data: ". json_encode($request->all()));
 
@@ -63,8 +215,12 @@ class APIController extends Controller
             'address' => 'required',
             'phone' => 'required',
             'postal' => 'required',
+            'is_donation' => 'required',
             'payment_method' => 'required',
             'items' => 'required|array',
+            'mosque_name' => 'required_if:is_donation,true',
+            'mosque_address' => 'required_if:is_donation,true',
+            'mosque_latlng' => 'required_if:is_donation,true',
         ];
 
         $validator = Validator::make($request->all(), $rules, [
@@ -79,6 +235,10 @@ class APIController extends Controller
             'payment_method.required' => 'Payment method is required',
             'items.required' => 'Items array is required',
             'items.array' => 'Items must be a valid array of objects',
+            'is_donation.required' => 'is_donation check is required',
+            'mosque_name.required_if' => 'Mosque Name is required',
+            'mosque_address.required_if' => 'Mosque Address is required',
+            'mosque_latlng.required_if' => 'Mosque LatLng is required',
         ]);
 
         if ($validator->fails()) {
@@ -142,6 +302,7 @@ class APIController extends Controller
 
         $order = new Order();
         $order->user_id = $userID;
+        $order->is_donation = $request->is_donation ? 1 : 0;
         $order->order_number = generateUniqueOrderNumber();
         $order->fullname = $request->fullname;
         $order->email = $request->email;
@@ -187,6 +348,17 @@ class APIController extends Controller
         }
 
         Log::debug("Order Created - OrderId: ". $order->id);
+
+        if($request->is_donation){
+            Donation::create([
+                "user_id" => $order->user_id,
+                "order_id" => $order->id,
+                "amount" => $order->amount,
+                "mosque_name" => $request->mosque_name,
+                "mosque_address" => $request->mosque_address,
+                "mosque_latlng" => $request->mosque_latlng
+            ]);
+        }
 
         if($request->payment_method == 'card'){
             foreach ($order->detail as $detail) {
@@ -291,25 +463,67 @@ class APIController extends Controller
         return $data;
     }
 
+    public function sendOTP(Request $request)
+    {
+        $phone = $request->phone;
+        if(empty($phone)){
+            return $this->responseJson(400, 'Please enter phone number.');
+        }
+        $user = User::where('phone', $phone)->first();
+        if (!empty($user)){
+            return $this->responseJson(400, 'A user with this phone number already exists, please use another phone number and try again.');
+        }
+
+        $phoneWithCC = '966' . $phone;
+        $code = rand(100000, 999999);
+
+        $smsData['number'] = $phone;
+        $smsData['senderName'] = "Mobile.SA";
+        $smsData['sendAtOption'] = "Now";
+        $smsData['messageBody'] = $code . ' is your verification code.';
+        $smsData['allow_duplicate'] = true;
+
+        $header['Authorization'] = 'Bearer '. env('MADAR_SMS_KEY');
+
+        Log::debug("Madar SMS Request: ". $phone);
+        $response = NetworkHelper::makeRequest('post', env('MADAR_SMS_URL'), 'send', $header, $smsData);
+        Log::debug("Madar SMS Response: ". $phone);
+        $responseArray = json_decode($response['data']);
+        if ($response['status'] == '200') {
+            UserPhoneOTP::updateOrCreate(
+                [
+                    'phone' => $phoneWithCC
+                ],
+                [
+                    'otp' => $code,
+                    'status' => 1,
+                    'ref_id' => $responseArray->data->message->id
+                ]);
+            return $this->responseJson(200, 'OTP Sent.');
+        }
+        return $this->responseJson(400, 'Something went wrong.');
+    }
 
     public function createCustomer(Request $request){
         $rules = [
             'fullname' => 'required',
             'phone' => 'required',
-            'email' => 'required|email:rfc,dns,strict|unique:users,email',
-            'postal' => 'required',
-            'address' => 'required',
+            'otp' => 'required',
+            // 'email' => 'required|email:rfc,dns,strict|unique:users,email',
+            // 'postal' => 'required',
+            // 'address' => 'required',
             'password' => 'required|min:3',
         ];
 
         $validator = Validator::make($request->all(), $rules, [
             'fullname.required' => 'Fullname is required',
             'phone.required' => 'Phone number is required',
-            'email.required' => 'Email is required',
-            'email.email' => 'Email must be a valid email address',
-            'email.unique' => 'Email must be unique',
-            'postal.required' => 'Postal code is required',
-            'address.required' => 'Address is required',
+            'otp.required' => 'OTP is required',
+            // 'email.required' => 'Email is required',
+            // 'email.email' => 'Email must be a valid email address',
+            // 'email.unique' => 'Email must be unique',
+            // 'postal.required' => 'Postal code is required',
+            // 'address.required' => 'Address is required',
             'password.required' => 'Password is required',
             'password.min' => 'Password must have atleast 3 characters'
         ]);
@@ -319,11 +533,65 @@ class APIController extends Controller
         if ($validator->fails()) {
             return $this->responseJson(422, null, null, $validator->messages()->all());
         }
-        $requestData = $request->all();
+
+        $otp = $request->otp;
+        $fullname = $request->fullname;
+        $phone = $request->phone;
+        $phoneWithCC = '966' . $phone;
+        $userOTP = UserPhoneOTP::where('phone', $phoneWithCC)->where('otp', $otp)->where('status', 1)->first();
+        if(empty($userOTP)){
+            return $this->responseJson(400, 'The OTP you entered is incorrect. Please try again.');
+        }
+        $userOTP->update(['status' => 0]);
         $requestData['status'] = 1;
+        $requestData['fullname'] = $fullname;
+        $requestData['phone'] =  $phone;
         $requestData['password'] = bcrypt($request->password);
 
         $user = User::create($requestData);
-        return $this->responseJson(200, 'User Created.', $user);
+        $token = auth()->guard('api')->login($user);
+
+        $userData['id'] = $user->id;
+        $userData['fullname'] = $user->fullname;
+        $userData['phone'] = $user->phone;
+        $userData['token'] = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60 // TTL in seconds
+        ];
+        $userData['created_at'] = $user->created_at;
+
+        if(auth()->guard('api')){
+            return $this->responseJson(200, 'Logged in successfully', $userData);
+        }
+
+        return $this->responseJson(400, 'Login Failed.');
+    }
+
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth('api')->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
     }
 }

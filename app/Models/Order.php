@@ -24,6 +24,11 @@ class Order extends Model
         return $this->hasOne(Team::class, 'id', 'rider_id')->where('type', 'rider');
     }
 
+    public function donation()
+    {
+        return $this->hasOne(Donation::class);
+    }
+
     public function payment_logs()
     {
         return $this->hasMany(PaymentLogs::class);

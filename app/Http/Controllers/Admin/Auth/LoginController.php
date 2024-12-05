@@ -45,8 +45,8 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::guard('team')->attempt($credentials)) {
-            if (Auth::guard('team')->check() && Auth::guard('team')->user()->type == 'admin') {
+        if (Auth::guard('admin')->attempt($credentials)) {
+            if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->type == 'admin') {
                 return redirect()->intended('admin/dashboard');
             }
         }
@@ -56,7 +56,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::guard('team')->logout();
+        Auth::guard('admin')->logout();
         return redirect()->route('admin.cpanelShowLogin');
     }
 }

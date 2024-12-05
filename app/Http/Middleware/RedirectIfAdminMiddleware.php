@@ -9,7 +9,7 @@ class RedirectIfAdminMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (auth('team')->check()) {
+        if (auth('admin')->check() && auth('admin')->user()->type == 'admin') {
             return redirect()->route('admin.dashboard');
         }
         return $next($request);

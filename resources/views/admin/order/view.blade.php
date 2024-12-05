@@ -15,8 +15,8 @@
 
             </div>
             <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <strong class="me-1">Order Status: </strong>
+                <p>
+                    <strong>Order Status: </strong>
                     @if ($order->status == 'pending')
                         <span class="badge badge-xs badge-dim bg-outline-warning d-none d-md-inline-flex">PENDING</span>
                     @elseif ($order->status == 'accepted')
@@ -26,22 +26,9 @@
                     @elseif ($order->status == 'delivered')
                         <span class="badge badge-xs badge-dim bg-outline-success d-none d-md-inline-flex">DELIVERED</span>
                         @else
-                        <span class="badge badge-xs badge-dim bg-outline-danger d-none d-md-inline-flex">DELIVERED</span>
+                        <span class="badge badge-xs badge-dim bg-outline-danger d-none d-md-inline-flex">REJECTED</span>
                     @endif
-
-                    <div class="ms-3">
-                        <div class="form-group">
-                            <select class="form-select form-select-sm" name="status" id="status">
-                                <option value="" selected hidden>-- Change Status --</option>
-                                <option value="pending">PENDING</option>
-                                <option value="accepted">ACCEPTED</option>
-                                <option value="pickedup">PICKED UP</option>
-                                <option value="delivered">DELIVERED</option>
-                                <option value="rejected">REJECTED</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                </p>
 
                 <p><strong>Total Amount:</strong> SAR {{ $order->amount }}</p>
                 <p><strong>Delivery Address:</strong> {{ $order->address }}</p>
@@ -57,6 +44,11 @@
                 <p><strong>Rider Phone:</strong> {{ $order->rider_phone ?? "" }}</p>
                 @else
                 <p><strong>Rider:</strong> Not Assigned</p>
+                @endif
+                @if (!empty($order->donation))
+                <p><strong>Mosque Name:</strong> {{ $order->donation->mosque_name ?? "" }}</p>
+                <p><strong>Mosque Address:</strong> {{ $order->donation->mosque_name ?? "" }}</p>
+                <p><strong>Mosque Location:</strong> <a class="h3" title="Open the mosque location on Google Maps." href="https://www.google.com/maps?q={{ $order->donation->mosque_latlng }}" target="_blank" rel="noopener noreferrer"><em class="icon ni ni-location" style="vertical-align: bottom;"></em></a></p>
                 @endif
             </div>
         </div>

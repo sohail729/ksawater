@@ -33,7 +33,7 @@ class OrderController extends Controller
     public function viewOrder(Request $request, $orderID)
     {
         $data = [];
-        $order = Order::with(['detail', 'rider', 'delivery_logs.rider'])->find($orderID);
+        $order = Order::with(['detail', 'rider', 'delivery_logs.rider', 'donation'])->find($orderID);
         if($order){
             $data['status'] = 200;
             $data['content'] = view('admin.order.view', compact('order'))->render();

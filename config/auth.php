@@ -41,9 +41,14 @@ return [
             'provider' => 'users',
         ],
 
-        'team' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'team',
+            'provider' => 'admin',
+        ],
+
+        'rider' => [
+            'driver' => 'jwt',
+            'provider' => 'rider',
         ],
 
         'api' => [
@@ -75,7 +80,12 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'team' => [
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Team::class,
+        ],
+
+        'rider' => [
             'driver' => 'eloquent',
             'model' => App\Models\Team::class,
         ],
@@ -104,6 +114,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'rider' => [
+            'provider' => 'rider',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admin' => [
+            'provider' => 'admin',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

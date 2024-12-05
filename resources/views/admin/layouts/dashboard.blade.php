@@ -188,7 +188,7 @@
                                                 {{-- <div class="user-info d-none d-md-block">
                                                     <div class="user-status">Administrator</div>
                                                     <div class="user-name dropdown-indicator">{{
-                                                        auth()->guard('team')->user()->fullname }}</div>
+                                                        auth()->guard('admin')->user()->fullname }}</div>
                                                 </div> --}}
                                             </div>
                                         </a>
@@ -199,8 +199,8 @@
                                                         <span>A</span>
                                                     </div>
                                                     <div class="user-info">
-                                                        <span class="lead-text">{{ auth()->guard('team')->user()->fullname }}</span>
-                                                        <span class="sub-text">{{ auth()->guard('team')->user()->email }}</span>
+                                                        <span class="lead-text">{{ auth()->guard('admin')->user()->fullname }}</span>
+                                                        <span class="sub-text">{{ auth()->guard('admin')->user()->email }}</span>
                                                     </div>
                                                 </div>
                                             </div>
